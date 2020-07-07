@@ -32,4 +32,21 @@ router.post('/', async(request, response) => {
     }
 })
 
+// 로그인
+router.post('/login', async(request, response) => {
+    try {
+        const result = await userController.login(request)
+        if(result === false) {
+            response.status(400).json("Login Failed !!!")
+        } else {
+            response.cookie("w_authExp", result.jwt.tokenExp)
+            response.cookie('x_auth', result.jwt.token)
+                .status(200)
+                .json({ loginSuccess: true, userId: result.userInfo[0].userId })
+        }
+    } catch (error) {
+        response.status(500).json(error.message)
+    }
+})
+
 module.exports = router
