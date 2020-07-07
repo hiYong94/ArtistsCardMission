@@ -44,4 +44,46 @@ User.insertUser = async(request) => {
     }
 }
 
+User.selectByLogin = async(request) => {
+    let connection
+    try {
+        connection = await pool.getConnection()
+        const sqlQuery = `SELECT userId, id, password FROM user WHERE id = ? && password = ?`
+        const data = await connection.query(sqlQuery, [request.id, request.password])
+        return data[0]
+    } catch (error) {
+        throw error
+    } finally {
+        connection.release()
+    }
+}
+
+User.insertJsonwebtoken = async(request) => {
+    let connection
+    try {
+        connection = await pool.getConnection()
+        const sqlQuery = `UPDATE user SET token=?, tokenExp=? WHERE userId=?`
+        const data = await connection.query(sqlQuery, [request.token, request.tokenExp, request.userId])
+        return data[0]
+    } catch (error) {
+        throw error
+    } finally {
+        connection.release()
+    }
+}
+
+User.selectByLoginId = async(request) => {
+    let connection
+    try {
+        connection = await pool.getConnection()
+        const sqlQuery = `SELECT userId, id, password FROM user WHERE id = ?`
+        const data = await connection.query(sqlQuery, request)
+        return data[0]
+    } catch (error) {
+        throw error
+    } finally {
+        connection.release()
+    }
+}
+
 module.exports = User
