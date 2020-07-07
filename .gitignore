@@ -107,3 +107,6 @@ dist
 # node_modules
 /node_modules
 /build
+
+# db config
+server/config/
