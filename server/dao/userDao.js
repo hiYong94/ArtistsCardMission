@@ -30,18 +30,18 @@ User.selectByUserId = async(request) => {
     }
 }
 
-// User.insertUser = async(request) => {
-//     let connection
-//     try {
-//         connection = await pool.getConnection()
-//         const sqlQuery = `INSERT INTO user(id, password, email) VALUES (?, ?, ?)`
-//         const data = await connection.sqlQuery(sqlQuery, request.id, request.password, request.email)
-//         return data
-//     } catch (error) {
-//         throw error
-//     } finally {
-//         connection.release()
-//     }
-// }
+User.insertUser = async(request) => {
+    let connection
+    try {
+        connection = await pool.getConnection()
+        const sqlQuery = `INSERT INTO user(id, password, email) VALUES (?, ?, ?)`
+        const data = await connection.query(sqlQuery, [request.id, request.password, request.email])
+        return data[0]
+    } catch (error) {
+        throw error
+    } finally {
+        connection.release()
+    }
+}
 
 module.exports = User

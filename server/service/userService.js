@@ -17,3 +17,12 @@ exports.findOne = async(request) => {
         throw error
     }
 }
+
+exports.join = async(request) => {
+    try {
+        const result = await userDao.insertUser(request)
+        return result
+    } catch (error) {
+        throw error
+    }
+}

@@ -15,8 +15,7 @@ router.get('/', async(request, response) => {
 // 회원 한명조회
 router.get('/:userId', async(request, response) => {
     try {
-        let userId = request.params.userId 
-        const result = await userController.findOne(userId) 
+        const result = await userController.findOne(request) 
         response.status(200).json(result)
     } catch (error) {
         response.status(500).json(error.message)
@@ -24,8 +23,13 @@ router.get('/:userId', async(request, response) => {
 })
 
 // 회원가입
-router.post('/', async (request, response) => {
-
+router.post('/', async(request, response) => {
+    try {
+        const result = await userController.join(request)
+        response.status(200).json(result)
+    } catch (error) {
+        response.status(500).json(error.message)
+    }
 })
 
 module.exports = router
