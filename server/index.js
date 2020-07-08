@@ -9,6 +9,7 @@ app.use(bodyParser.json())
 app.use(cookieParser())
 
 app.use('/api/user', require('./routes/user'))
+app.use('/api/music', require('./routes/music'))
 
 app.get('/', () => console.log("Hello World!"))
 app.listen(port, () => console.log(`Music application listening Port : ${port}`))
