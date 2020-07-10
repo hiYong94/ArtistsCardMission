@@ -34,7 +34,7 @@ function RegisterPage(props) {
         // redux를 사용하지 않았다면 Axios
 
         dispatch(registerUser(body))
-        .then(response => { // 성공한다면 페이지 이동
+        .then(response => {
             if(response.payload.success) {
                 props.history.push('/login')
             } else {
