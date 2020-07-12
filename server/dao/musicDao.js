@@ -6,7 +6,7 @@ Music.selectAll = async() => {
     let connection
     try {
         connection = await pool.getConnection()
-        const sqlQuery = `SELECT musicId, userId, albumName, trackName, artistName, soundSourceFilePath FROM music`
+        const sqlQuery = `SELECT musicId, userId, albumName, trackName, artistName, fileName FROM music`
         const data = await connection.query(sqlQuery)
         return data[0]
     } catch (error) {
@@ -20,7 +20,7 @@ Music.selectByMusicId = async(request) => {
     let connection
     try {
         connection = await pool.getConnection()
-        const sqlQuery = `SELECT musicId, userId, albumName, trackName, artistName, soundSourceFilePath FROM music WHERE musicId = ?`
+        const sqlQuery = `SELECT musicId, userId, albumName, trackName, artistName, fileName FROM music WHERE musicId = ?`
         const data = await connection.query(sqlQuery, request)
         return data[0]
     } catch (error) {
@@ -34,8 +34,8 @@ Music.insertMusic = async(request) => {
     let connection
     try {
         connection = await pool.getConnection()
-        const sqlQuery = `INSERT INTO music(userId, albumName, trackName, artistName) VALUES (?, ?, ?, ?)`
-        const data = await connection.query(sqlQuery, [request.userId, request.albumName, request.trackName, request.artistName])
+        const sqlQuery = `INSERT INTO music(userId, albumName, trackName, artistName, originalName, fileName, soundSourceFilePath) VALUES (?, ?, ?, ?, ?, ?, ?)`
+        const data = await connection.query(sqlQuery, [request.userId, request.albumName, request.trackName, request.artistName, request.originalname, request.filename, request.path])
         return data[0]
     } catch (error) {
         throw error

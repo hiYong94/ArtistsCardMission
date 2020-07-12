@@ -10,7 +10,7 @@ function MusicRegisterPage(props) {
     const [AlbumName, setAlbumName] = useState("")
     const [TrackName, setTrackName] = useState("")
     const [ArtistName, setArtistName] = useState("")
-    const [SoundSourceFilePath, setSoundSourceFilePath] = useState("")
+    const [SoundSourceFilePath, setSoundSourceFilePath] = useState(null)
 
     const onUserIdHandler = (event) => {
         setUserId(event.currentTarget.value)
@@ -28,17 +28,20 @@ function MusicRegisterPage(props) {
         setArtistName(event.currentTarget.value)
     }
 
+    const onSoundSourceFileHandler = (event) => {
+        setSoundSourceFilePath(event.target.files[0])
+    }
+
     const onSubmitHandler = (event) => {
         event.preventDefault()
-
-        let body = {
-            userId: UserId,
-            albumName: AlbumName,
-            trackName: TrackName,
-            artistName: ArtistName
-        }
-
-        dispatch(registerMusic(body))
+        const formData = new FormData()
+        formData.append("userId", UserId)
+        formData.append("albumName", AlbumName)
+        formData.append("trackName", TrackName)
+        formData.append("artistName", ArtistName)
+        formData.append("soundSourceFilePath", SoundSourceFilePath)
+        
+        dispatch(registerMusic(formData))
         .then(response => {
             if(response.payload.success) {
                 props.history.push('/music')
@@ -56,7 +59,7 @@ function MusicRegisterPage(props) {
             
             
             <form style={{display: 'flex', flexDirection: 'column'}}
-                onSubmit={onSubmitHandler}
+                onSubmit={onSubmitHandler} encType='multipart/form-data'
             >
                 <label>userId</label>
                 <input type="text" value={UserId} onChange={onUserIdHandler} />
@@ -70,9 +73,9 @@ function MusicRegisterPage(props) {
                 <label>artistName</label>
                 <input type="text" value={ArtistName} onChange={onArtistNameHandler} />
                 
-                <label>soundSourceFilePath</label>
-                <input type="text" value={SoundSourceFilePath}/>
-
+                <br />
+                <input type="file" onChange={onSoundSourceFileHandler} name="soundSourceFilePath" />
+                
                 <br />
                 <button type="submit">추가하기</button>
             </form>

@@ -5,13 +5,19 @@ import { withRouter } from 'react-router-dom'
 function RightMenu(props) {
     return (
         <Menu mode={props.mode}>
-            <Menu.Item key="music">
-                <a href="/music">music</a>
+            <Menu.Item key="search">
+                <a href="/music/search">Search</a>
             </Menu.Item>
-            <Menu.Item key="mail">
+            <Menu.Item key="music">
+                <a href="/music">Music</a>
+            </Menu.Item>
+            <Menu.Item key="mypage">
+                <a href={`/mypage`}>Mypage</a>
+            </Menu.Item>
+            <Menu.Item key="login">
                 <a href="/login">Signin</a>
             </Menu.Item>
-            <Menu.Item key="app">
+            <Menu.Item key="register">
                 <a href="/register">Signup</a>
             </Menu.Item>
         </Menu>

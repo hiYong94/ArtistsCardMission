@@ -8,11 +8,10 @@ function MusicUpdatePage(props) {
     const dispatch = useDispatch()
     const musicId = props.match.params.musicId
     
-    const [UserId, setUserId] = useState("")
     const [AlbumName, setAlbumName] = useState("")
     const [TrackName, setTrackName] = useState("")
     const [ArtistName, setArtistName] = useState("")
-    const [SoundSourceFilePath, setSoundSourceFilePath] = useState("")
+    const [SoundSourceFilePath, setSoundSourceFilePath] = useState(null)
 
     const onAlbumNameHandler = (event) => {
         setAlbumName(event.currentTarget.value)
@@ -26,16 +25,20 @@ function MusicUpdatePage(props) {
         setArtistName(event.currentTarget.value)
     }
 
+    const onSoundSourceFileHandler = (event) => {
+        setSoundSourceFilePath(event.target.files[0])
+    }
+
     const onSubmitHandler = (event) => {
         event.preventDefault()
 
-        let body = {
-            albumName: AlbumName,
-            trackName: TrackName,
-            artistName: ArtistName
-        }
+        const formData = new FormData()
+        formData.append("albumName", AlbumName)
+        formData.append("trackName", TrackName)
+        formData.append("artistName", ArtistName)
+        formData.append("soundSourceFilePath", SoundSourceFilePath)
 
-        dispatch(updateMusic(body, musicId))
+        dispatch(updateMusic(formData, musicId))
         .then(response => {
             if(response.payload.success) {
                 props.history.push('/music')
@@ -52,6 +55,7 @@ function MusicUpdatePage(props) {
                     setAlbumName(response.data.result[0].albumName)
                     setTrackName(response.data.result[0].trackName)
                     setArtistName(response.data.result[0].artistName)
+                    setSoundSourceFilePath(response.data.result[0].fileName)
                 } else {
                     alert('Failed to get Music')
                 }
@@ -65,7 +69,7 @@ function MusicUpdatePage(props) {
         }}>
             
             <form style={{display: 'flex', flexDirection: 'column'}}
-                onSubmit={onSubmitHandler}
+                onSubmit={onSubmitHandler} encType='multipart/form-data'
             >
                 <label>albumName</label>
                 <input type="text" value={AlbumName} onChange={onAlbumNameHandler} />
@@ -76,8 +80,8 @@ function MusicUpdatePage(props) {
                 <label>artistName</label>
                 <input type="text" value={ArtistName} onChange={onArtistNameHandler} />
                 
-                <label>soundSourceFilePath</label>
-                <input type="text" value={SoundSourceFilePath}/>
+                <br />
+                <input type="file" onChange={onSoundSourceFileHandler} name="soundSourceFilePath" />
 
                 <br />
                 <button type="submit">수정하기</button>

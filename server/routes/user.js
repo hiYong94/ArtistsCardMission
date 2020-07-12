@@ -16,7 +16,10 @@ router.get('/', async(request, response) => {
 router.get('/:userId', async(request, response) => {
     try {
         const result = await userController.findOne(request) 
-        response.status(200).json(result)
+        response.status(200).json({
+            success: true,
+            result
+        })
     } catch (error) {
         response.status(500).json(error.message)
     }

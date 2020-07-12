@@ -1,24 +1,32 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { withRouter } from 'react-router-dom'
-import { Button, Row, Col } from 'antd'
+import { Row, Col } from 'antd'
 import axios from 'axios'
 
-function MusicListPage(props) {
-    const [Music, setMusic] = useState([])
+function MusicSearchPage(props) {
     const [TrackName, setTrackName] = useState("")
+    const [Music, setMusic] = useState([])
+    
+    console.log("TrackName", TrackName)
 
-    useEffect(() => {
-        axios.get('/api/music')
-            .then((response) => {
-                if(response.data.success) { 
-                    console.log(response.data.result)
-                    setMusic(response.data.result)
-                } else {
-                    alert('Failed to get Music')
-                }
-            })
-    }, [])
+    const onChange = (event) => {
+        setTrackName(event.target.value)
+    }
 
+    const onClick = (event) => {
+        event.preventDefault()
+
+        axios.get(`/api/music/search/${TrackName}`)
+        .then((response) => {
+            if(response.data.success) { 
+                console.log(response.data.result)
+                setMusic(response.data.result)
+            } else {
+                alert('Failed to get Music')
+            }
+        })
+    }
+    
     const renderMusics = Music.map((music, index) => {
         return <Col lg={6} md={8} xs={24}>
                     <span>번호 : {index} </span><br />
@@ -26,7 +34,6 @@ function MusicListPage(props) {
                     <span>트랙명 : {music.trackName} </span><br />
                     <span>아티스트명 : {music.artistName} </span><br />
                     <span>음원명 : {music.fileName} </span><br />
-                    <button><a href={`/music/update/${music.musicId}`} >수정하기</a></button><br />
                 </Col>
     })
 
@@ -36,18 +43,20 @@ function MusicListPage(props) {
             , width: '100%', height: '70vh'
         }}>
             
+            {/* {renderMusicList} */}
             <div style={{ width: '85%', margin: '1rem auto' }}>
 
+
             <h2>음원 리스트 페이지</h2>
-            <Button type="submit"><a href="/music/register">음원 추가</a></Button>
-            
+            <input type="text" value={TrackName} onChange={onChange} />
+                <button type="submit" onClick={onClick}>검색</button>
             <hr/>
             <Row gutter={16}>
                 {renderMusics}
             </Row>
-        </div>
+            </div>
         </div>
     )
 }
 
-export default withRouter(MusicListPage)
+export default withRouter(MusicSearchPage)

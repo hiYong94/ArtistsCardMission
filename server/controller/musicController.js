@@ -21,10 +21,13 @@ exports.findOne = async(request) => {
 
 exports.addMusic = async(request) => {
     try {
+        let soundSourceFilePath = request.file
         let musicObject = {
             userId, albumName, trackName, artistName
         } = request.body
-        const result = await musicService.addMusic(musicObject)
+        const requestObject = Object.assign(musicObject, soundSourceFilePath)
+        console.log(requestObject)
+        const result = await musicService.addMusic(requestObject)
         return result
     } catch (error) {
         throw error
