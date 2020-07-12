@@ -6,7 +6,6 @@ import { withRouter } from 'react-router-dom'
 function LoginPage(props) {
     const dispatch = useDispatch()
 
-    // 내부의 값을 변경하려면 state를 이용해야함
     const [Id, setId] = useState("")
     const [Password, setPassword] = useState("")
 
@@ -19,7 +18,7 @@ function LoginPage(props) {
     }
 
     const onSubmitHandler = (event) => {
-        event.preventDefault() // 가 없으면 바로 화면이 리프레쉬된다.
+        event.preventDefault()
 
         let body = {
             id: Id,
@@ -27,11 +26,10 @@ function LoginPage(props) {
         }
 
         dispatch(loginUser(body))
-        .then(response => { // 성공한다면 페이지 이동
+        .then(response => { 
             if(response.payload.loginSuccess) {
                 props.history.push('/')
             } else {
-                console.log("실패유")
                 alert('Login Error')
             }
         })

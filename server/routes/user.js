@@ -2,7 +2,6 @@ const express = require('express')
 const router = express.Router()
 const userController = require('../controller/userController')
 
-// 회원 전체조회
 router.get('/', async(request, response) => {
     try {
         const result = await userController.findAll()
@@ -12,7 +11,6 @@ router.get('/', async(request, response) => {
     }
 })
 
-// 회원 한명조회
 router.get('/:userId', async(request, response) => {
     try {
         const result = await userController.findOne(request) 
@@ -25,7 +23,6 @@ router.get('/:userId', async(request, response) => {
     }
 })
 
-// 회원가입
 router.post('/', async(request, response) => {
     try {
         const result = await userController.join(request)
@@ -38,7 +35,6 @@ router.post('/', async(request, response) => {
     }
 })
 
-// 로그인
 router.post('/login', async(request, response) => {
     try {
         const result = await userController.login(request)

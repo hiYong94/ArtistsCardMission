@@ -11,7 +11,6 @@ function MusicListPage(props) {
         axios.get('/api/music')
             .then((response) => {
                 if(response.data.success) { 
-                    console.log(response.data.result)
                     setMusic(response.data.result)
                 } else {
                     alert('Failed to get Music')
@@ -37,15 +36,14 @@ function MusicListPage(props) {
         }}>
             
             <div style={{ width: '85%', margin: '1rem auto' }}>
-
-            <h2>음원 리스트 페이지</h2>
-            <Button type="submit"><a href="/music/register">음원 추가</a></Button>
-            
-            <hr/>
-            <Row gutter={16}>
-                {renderMusics}
-            </Row>
-        </div>
+                <h2>음원 리스트 페이지</h2>
+                <Button type="submit"><a href="/music/register">음원 추가</a></Button>
+                
+                <hr/>
+                <Row gutter={16}>
+                    {renderMusics}
+                </Row>
+            </div>
         </div>
     )
 }

@@ -17,8 +17,6 @@ const createStoreWithMiddleware = applyMiddleware(promiseMiddleware, ReduxThunk)
 
 ReactDOM.render(
     <Provider
-        // redux 연결
-        // google application redux extension 설정
         store={createStoreWithMiddleware(
             Reducer,
             window.__REDUX_DEVTOOLS_EXTENSION__ &&

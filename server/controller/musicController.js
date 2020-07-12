@@ -26,7 +26,6 @@ exports.addMusic = async(request) => {
             userId, albumName, trackName, artistName
         } = request.body
         const requestObject = Object.assign(musicObject, soundSourceFilePath)
-        console.log(requestObject)
         const result = await musicService.addMusic(requestObject)
         return result
     } catch (error) {

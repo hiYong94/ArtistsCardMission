@@ -5,7 +5,6 @@ import {
     UPDATE_MUSIC
 } from './types'
 
-// 음원 추가
 export function registerMusic(dataToSubmit) {
     const request = axios.post(`${MUSIC_SERVER}`, dataToSubmit)
         .then(response => response.data)
@@ -16,9 +15,7 @@ export function registerMusic(dataToSubmit) {
     }
 }
 
-// 음원 수정
 export function updateMusic(dataToSubmit, musicId) {
-    console.log("전송값", dataToSubmit, musicId)
     const request = axios.put(`${MUSIC_SERVER}/${musicId}`, dataToSubmit)
         .then(response => response.data)
     

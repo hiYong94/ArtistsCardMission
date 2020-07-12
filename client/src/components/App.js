@@ -6,7 +6,6 @@ import Footer from "./views/Footer/Footer"
 import LandingPage from "./views/LandingPage/LandingPage"
 import LoginPage from "./views/LoginPage/LoginPage"
 import RegisterPage from "./views/RegisterPage/RegisterPage"
-import MyPage from "./views/MyPage/MyPage"
 import MusicListPage from "./views/MusicListPage/MusicListPage"
 import MusicRegisterPage from "./views/MusicRegisterPage/MusicRegisterPage"
 import MusicUpdatePage from "./views/MusicUpdatePage/MusicUpdatePage"
@@ -21,7 +20,6 @@ function App() {
                     <Route exact path="/" component={LandingPage} />
                     <Route exact path="/login" component={LoginPage} />
                     <Route exact path="/register" component={RegisterPage} />
-                    <Route exact path="/mypage" component={MyPage} />
                     <Route exact path="/music" component={MusicListPage} />
                     <Route exact path="/music/register" component={MusicRegisterPage} />
                     <Route exact path="/music/search" component={MusicSearchPage} />

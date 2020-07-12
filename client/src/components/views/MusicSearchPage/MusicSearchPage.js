@@ -7,8 +7,6 @@ function MusicSearchPage(props) {
     const [TrackName, setTrackName] = useState("")
     const [Music, setMusic] = useState([])
     
-    console.log("TrackName", TrackName)
-
     const onChange = (event) => {
         setTrackName(event.target.value)
     }
@@ -19,7 +17,6 @@ function MusicSearchPage(props) {
         axios.get(`/api/music/search/${TrackName}`)
         .then((response) => {
             if(response.data.success) { 
-                console.log(response.data.result)
                 setMusic(response.data.result)
             } else {
                 alert('Failed to get Music')
@@ -43,17 +40,14 @@ function MusicSearchPage(props) {
             , width: '100%', height: '70vh'
         }}>
             
-            {/* {renderMusicList} */}
             <div style={{ width: '85%', margin: '1rem auto' }}>
-
-
-            <h2>음원 리스트 페이지</h2>
-            <input type="text" value={TrackName} onChange={onChange} />
-                <button type="submit" onClick={onClick}>검색</button>
-            <hr/>
-            <Row gutter={16}>
-                {renderMusics}
-            </Row>
+                <h2>음원 리스트 페이지</h2>
+                <input type="text" value={TrackName} onChange={onChange} />
+                    <button type="submit" onClick={onClick}>검색</button>
+                <hr/>
+                <Row gutter={16}>
+                    {renderMusics}
+                </Row>
             </div>
         </div>
     )

@@ -31,8 +31,6 @@ function RegisterPage(props) {
             email: Email
         }
         
-        // redux를 사용하지 않았다면 Axios
-
         dispatch(registerUser(body))
         .then(response => {
             if(response.payload.success) {
